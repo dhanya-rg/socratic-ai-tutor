@@ -1,21 +1,21 @@
-def plan(question: str):
+﻿def plan(question: str) -> dict:
     q = question.lower()
 
-    if "probability" in q or "coin" in q or "dice" in q:
-        topic = "probability"
-        difficulty = "introductory"
-    elif "python" in q or "pandas" in q or "code" in q:
-        topic = "computer science"
-        difficulty = "intermediate"
-    elif "x^2" in q or "quadratic" in q or "solve" in q:
-        topic = "algebra"
-        difficulty = "introductory"
+    if any(term in q for term in ["coin", "dice", "probability", "chance", "odds"]):
+        topic = "Probability"
+        difficulty = "Introductory"
+    elif any(term in q for term in ["python", "pandas", "code", "function", "dataframe"]):
+        topic = "Computer Science"
+        difficulty = "Intermediate"
+    elif any(term in q for term in ["x^2", "quadratic", "factor", "solve"]):
+        topic = "Algebra"
+        difficulty = "Introductory"
     else:
-        topic = "general math"
-        difficulty = "introductory"
+        topic = "General Math"
+        difficulty = "Introductory"
 
     return {
         "topic": topic,
         "difficulty": difficulty,
-        "strategy": "teach concept first, then give hint, then verify"
+        "strategy": "Explain the concept, give a Socratic hint, verify correctness, and avoid answer-dumping.",
     }

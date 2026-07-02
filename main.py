@@ -1,42 +1,19 @@
-from agents.planner import plan
-from agents.tutor import explain_concept
-from agents.hint import generate_hint
-from agents.verifier import verify_solution
-from agents.safety import safety_check
+﻿from agents.pipeline import run_pipeline
 
-def run_tutor(question: str):
-    safety = safety_check(question)
-    if not safety["allowed"]:
-        return safety["message"]
 
-    plan_result = plan(question)
-    concept = explain_concept(question, plan_result)
-    hint = generate_hint(question, plan_result)
-    verification = verify_solution(question, plan_result)
+def main():
+    print("SocraticAI Tutor - type 'quit' to exit.")
 
-    return f"""
-SocraticAI Tutor
+    while True:
+        question = input("\nStudent: ").strip()
 
-Topic: {plan_result["topic"]}
-Difficulty: {plan_result["difficulty"]}
+        if question.lower() in {"quit", "exit"}:
+            print("Goodbye!")
+            break
 
-Concept:
-{concept}
+        response = run_pipeline(question)
+        print(response)
 
-Hint:
-{hint}
-
-Verification:
-{verification}
-
-Next step:
-Try solving the next step yourself. If you're stuck, ask for another hint.
-"""
 
 if __name__ == "__main__":
-    print("SocraticAI Tutor — type 'quit' to exit.")
-    while True:
-        q = input("\nStudent: ")
-        if q.lower() in ["quit", "exit"]:
-            break
-        print(run_tutor(q))
+    main()
